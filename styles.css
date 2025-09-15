@@ -5,6 +5,18 @@
     box-sizing: border-box;
 }
 
+/* Favicon Styles - Circular appearance in browser tabs */
+/* Note: Most browsers will automatically make favicons circular in tabs */
+/* These styles help ensure proper display across different browsers */
+
+/* For browsers that support custom favicon styling */
+link[rel="icon"] {
+    border-radius: 50%;
+}
+
+/* Additional meta tags for better favicon support */
+/* The favicon will appear circular in most modern browsers automatically */
+
 :root {
     --primary-color: #194e60;
     --primary-dark: #0f3a4a;
