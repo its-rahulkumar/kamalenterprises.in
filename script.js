@@ -96,37 +96,55 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Intersection Observer for immediate animations
-const observerOptions = {
-    threshold: 0.05,
-    rootMargin: '0px 0px 50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0) scale(1)';
-            entry.target.classList.add('animate-in');
-        }
-    });
-}, observerOptions);
-
-// Enhanced animation setup
+// Optimized image loading for slow internet connections
 document.addEventListener('DOMContentLoaded', () => {
-    const animatedElements = document.querySelectorAll('.team-member, .stat-item, .about-text, .contact-method, .address-card, .contact-info');
+    // Ensure all elements are immediately visible
+    const animatedElements = document.querySelectorAll('.team-member, .stat-item, .about-text, .contact-method, .address-card, .contact-info, .gallery-item, .brand-item');
 
     animatedElements.forEach((el) => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px) scale(0.99)';
-        el.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
-        observer.observe(el);
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0) scale(1)';
+        el.style.transition = 'none';
     });
 
-    // Add floating animation to hero elements
+    // Remove animation delays from hero elements
     const heroElements = document.querySelectorAll('.hero-content, .hero-image');
-    heroElements.forEach((el, index) => {
-        el.style.animationDelay = `${index * 0.05}s`;
+    heroElements.forEach((el) => {
+        el.style.animationDelay = '0s';
+    });
+
+    // Handle image loading states for better slow internet experience
+    const images = document.querySelectorAll('img');
+
+    images.forEach((img) => {
+        // Add loading class initially
+        img.classList.add('loading');
+
+        // Handle successful load
+        img.addEventListener('load', () => {
+            img.classList.remove('loading');
+            img.classList.add('loaded');
+        });
+
+        // Handle load error
+        img.addEventListener('error', () => {
+            img.classList.remove('loading');
+            img.classList.add('error');
+            // Add a placeholder for failed images
+            img.style.background = 'linear-gradient(45deg, #f0f0f0, #e0e0e0)';
+            img.style.display = 'flex';
+            img.style.alignItems = 'center';
+            img.style.justifyContent = 'center';
+            img.style.color = '#999';
+            img.style.fontSize = '14px';
+            img.alt = 'Image failed to load';
+        });
+
+        // If image is already loaded (cached), remove loading state immediately
+        if (img.complete && img.naturalHeight !== 0) {
+            img.classList.remove('loading');
+            img.classList.add('loaded');
+        }
     });
 });
 
@@ -397,23 +415,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Add intersection observer for brand animations
-    const brandObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, { threshold: 0.1 });
-
-    // Observe brand items for animation
+    // Remove brand animation observer - make images appear immediately
     const brandItems = document.querySelectorAll('.brand-item');
-    brandItems.forEach((item, index) => {
-        item.style.opacity = '0';
-        item.style.transform = 'translateY(30px)';
-        item.style.transition = `all 0.6s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.1}s`;
-        brandObserver.observe(item);
+    brandItems.forEach((item) => {
+        item.style.opacity = '1';
+        item.style.transform = 'translateY(0)';
+        item.style.transition = 'none';
     });
 
     // Add hover sound effect (optional)
