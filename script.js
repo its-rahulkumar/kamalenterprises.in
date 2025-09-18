@@ -251,56 +251,7 @@ window.addEventListener('load', () => {
 // Add loading class to body
 document.body.classList.add('loading');
 
-// Back to top button
-const backToTopButton = document.createElement('button');
-backToTopButton.innerHTML = '<i class="fas fa-arrow-up"></i>';
-backToTopButton.className = 'back-to-top';
-backToTopButton.style.cssText = `
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 50px;
-    height: 50px;
-    background: var(--primary-color);
-    color: white;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    display: none;
-    z-index: 1000;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
-`;
-
-document.body.appendChild(backToTopButton);
-
-// Show/hide back to top button
-window.addEventListener('scroll', () => {
-    if (window.pageYOffset > 300) {
-        backToTopButton.style.display = 'block';
-    } else {
-        backToTopButton.style.display = 'none';
-    }
-});
-
-// Back to top functionality
-backToTopButton.addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
-});
-
-// Add hover effect to back to top button
-backToTopButton.addEventListener('mouseenter', () => {
-    backToTopButton.style.transform = 'scale(1.1)';
-    backToTopButton.style.background = 'var(--primary-dark)';
-});
-
-backToTopButton.addEventListener('mouseleave', () => {
-    backToTopButton.style.transform = 'scale(1)';
-    backToTopButton.style.background = 'var(--primary-color)';
-});
+// Back to top button removed as requested
 
 // Preloader
 window.addEventListener('load', () => {
@@ -511,7 +462,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Gallery Modal Functionality
     const modal = document.getElementById('imageModal');
     const modalImg = document.getElementById('modalImage');
-    const modalCaption = document.getElementById('modalCaption');
     const closeBtn = document.querySelector('.close');
     const galleryItems = document.querySelectorAll('.gallery-item');
 
@@ -521,7 +471,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const img = this.querySelector('.gallery-img');
             modal.style.display = 'block';
             modalImg.src = img.src;
-            modalCaption.textContent = img.alt;
             document.body.style.overflow = 'hidden'; // Prevent background scrolling
         });
     });
